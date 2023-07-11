@@ -1,0 +1,36 @@
+body
+{
+    text-align: center;
+    margin: 3.5% 7%;
+}
+
+header
+{
+    margin-bottom: 3.5%;
+}
+
+.titulo
+{
+    font-size: 6rem;
+}
+
+.subtitulo
+{
+    font-size: 3rem;
+}
+
+.estadisticasHome
+{
+    margin-bottom: 7%;
+    font-size: 2rem;
+}
+
+.tarjetas
+{
+    margin-bottom: 7%;
+}
+
+footer
+{
+    font-size: 0.8rem;
+}
