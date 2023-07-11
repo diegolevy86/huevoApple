@@ -1,0 +1,11 @@
+{
+  "name": "huevoapple",
+  "version": "1.0.0",
+  "description": "Manejo de la base de datos de Huevo Apple",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Levy",
+  "license": "ISC"
+}
