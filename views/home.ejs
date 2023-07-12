@@ -10,33 +10,36 @@
 </head>
 <body>
 
-    <header class="container">
+    <header class="container-fluid row">
+        <div class="col-lg-3 cont-fecha">
+            <p class="fecha">10/07/2023</p>
+        </div>
+        <div class="col-lg-6">
             <h1 class="titulo">Huevo Apple</h1>
             <h2 class="subtitulo">Base de Datos</h2>
+        </div>
+        <div class="col-lg-3">
+            <div class="contNum">
+                <p class="numero">5000</p>
+                <p class="tituloNumero">Clientes</p>
+            </div>
+            <div class="contNum">
+                <p class="numero">6000</p>
+                <p class="tituloNumero">Teléfonos</p>
+            </div>
+        </div>
     </header>
     
-    <section class="estadisticasHome row">
-        <div class="col-lg-4">
-            <p>5000</p>
-            <p>Clientes</p>
-        </div>
-        <div class="col-lg-4">
-            <p>10/07/2023</p>
-        </div>
-        <div class="col-lg-4">
-            <p>6000</p>
-            <p>Teléfonos</p>
-        </div>
-    </section>
-
-    <section class="tarjetas">
+    <section class="tarjetas container-fluid">
         <div class="row">
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Consultas</h5>
-                        <p class="card-text">Buscar en la base de datos por cliente, equipo o fecha</p>
-                        <a href="#" class="btn btn-primary">Ingresar</a>
+                        <p class="card-text">Buscar en la base de datos</p>
+                        <a href="#" class="btn btn-primary">Por IMEI</a>
+                        <a href="#" class="btn btn-primary">Por Fecha</a>
+                        <a href="#" class="btn btn-primary">Por Cliente</a>
                     </div>
                 </div>
             </div>
@@ -45,7 +48,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Entradas</h5>
                         <p class="card-text">Ingrese nuevas reparaciones</p>
-                        <a href="#" class="btn btn-primary">Ingresar</a>
+                        <a href="#" class="btn btn-primary">Reparación Hoy</a>
+                        <a href="#" class="btn btn-primary">Reparación sin cliente Hoy</a>
+                        <a href="#" class="btn btn-primary">Ingresar Reparación</a>
+                        <a href="#" class="btn btn-primary">Ingresar Reparación sin cliente</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +67,7 @@
         </div>
     </section>
 
-    <footer>
+    <footer class="container-fluid">
         <p>Copyright 2023 Diego Levy</p>
     </footer>
 
