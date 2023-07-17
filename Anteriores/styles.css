@@ -1,0 +1,76 @@
+body
+{
+    text-align: center;
+    color: #78C1F3;
+}
+
+.row
+{
+    margin-left: 0;
+}
+
+.container-fluid
+{
+    padding: 5% 10%;
+}
+
+header
+{
+    background-color: #F8FDCF;
+    margin: 0;
+}
+
+.fecha
+{
+    position: relative;
+    top: 40%;
+    font-size: 2rem;
+}
+
+.titulo
+{
+    font-size: 7rem;
+}
+
+.subtitulo
+{
+    font-size: 4rem;
+}
+
+.numero
+{
+    font-size: 5rem;
+}
+
+.tituloNumero
+{
+    font-size: 1.3rem;
+}
+
+p
+{
+    font-size: 1rem;
+}
+
+.tarjetas
+{
+    background-color: #E2F6CA;
+}
+
+.card-body
+{
+    background-color: #F8FDCF;
+}
+
+.card-title, .card-text
+{
+    color: #78C1F3;
+}
+
+footer
+{
+    font-size: 0.8rem;
+    background-color: #F8FDCF;
+}
+
+/* colores #78C1F3 #9BE8D8 #E2F6CA #F8FDCF */

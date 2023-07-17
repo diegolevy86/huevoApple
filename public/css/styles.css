@@ -1,76 +1,52 @@
-body
-{
-    text-align: center;
-    color: #78C1F3;
-}
-
-.row
-{
-    margin-left: 0;
-}
-
 .container-fluid
 {
-    padding: 5% 10%;
+    padding: 3% 6%;
 }
 
-header
+.navbar-brand
 {
-    background-color: #F8FDCF;
-    margin: 0;
+    font-size: 3rem;
 }
 
-.fecha
+.menu
 {
-    position: relative;
-    top: 40%;
-    font-size: 2rem;
+    position: absolute;
+    right: 20%;
 }
 
-.titulo
+.nav-item
 {
-    font-size: 7rem;
+    padding-left: 10%;
 }
 
-.subtitulo
+.busquedas 
 {
-    font-size: 4rem;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
-.numero
+.formu
 {
-    font-size: 5rem;
+    border: 2px solid lightgray;
+    border-radius: 7px;
+    padding: 2%;
 }
 
-.tituloNumero
+#modcol1, #modcol2, #modcol3, #modcol4, #modcol5, #modcol6, #modcol7, #modcol8, #modcol9, #modcol10, #modcol11
 {
-    font-size: 1.3rem;
+    border-radius: 0 5px 5px 0;
 }
 
-p
+.formItem
 {
-    font-size: 1rem;
+    margin-top: 3%;
 }
 
-.tarjetas
+.below
 {
-    background-color: #E2F6CA;
+    margin-top: 5%;
 }
 
-.card-body
-{
-    background-color: #F8FDCF;
-}
 
-.card-title, .card-text
-{
-    color: #78C1F3;
-}
 
-footer
-{
-    font-size: 0.8rem;
-    background-color: #F8FDCF;
-}
 
-/* colores #78C1F3 #9BE8D8 #E2F6CA #F8FDCF */
