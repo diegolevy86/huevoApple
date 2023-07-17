@@ -1,36 +1,52 @@
-body
+.container-fluid
 {
-    text-align: center;
-    margin: 3.5% 7%;
+    padding: 3% 6%;
 }
 
-header
-{
-    margin-bottom: 3.5%;
-}
-
-.titulo
-{
-    font-size: 6rem;
-}
-
-.subtitulo
+.navbar-brand
 {
     font-size: 3rem;
 }
 
-.estadisticasHome
+.menu
 {
-    margin-bottom: 7%;
-    font-size: 2rem;
+    position: absolute;
+    right: 20%;
 }
 
-.tarjetas
+.nav-item
 {
-    margin-bottom: 7%;
+    padding-left: 10%;
 }
 
-footer
+.busquedas 
 {
-    font-size: 0.8rem;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
+
+.formu
+{
+    border: 2px solid lightgray;
+    border-radius: 7px;
+    padding: 2%;
+}
+
+#modcol1, #modcol2, #modcol3, #modcol4, #modcol5, #modcol6, #modcol7, #modcol8, #modcol9, #modcol10, #modcol11
+{
+    border-radius: 0 5px 5px 0;
+}
+
+.formItem
+{
+    margin-top: 3%;
+}
+
+.below
+{
+    margin-top: 5%;
+}
+
+
+
+
