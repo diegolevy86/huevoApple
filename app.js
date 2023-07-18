@@ -19,7 +19,7 @@ app.listen(port, function () {
     console.log("Server started on port " + port);
 });
 
-console.log(validador.validadorImei(355435071646557));
+//console.log(validador.validadorImei(355435071646557));
 
 database.authenticate();
 database.synchronize();

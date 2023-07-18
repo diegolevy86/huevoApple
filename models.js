@@ -15,7 +15,7 @@ const Reparacion = sequelize.define('Reparacion',{
 
     idTelefono: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
     },
 
     idCliente: {
@@ -47,10 +47,11 @@ const Reparacion = sequelize.define('Reparacion',{
     fecha: {
         type: DataTypes.DATEONLY,
         allowNull: false
-    }
+   }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.Reparacion' }
+     {timestamps: false,
+     freezeTableName:  true,
+     tableName: 'Reparacion'}
 );
 
 const Cliente = sequelize.define('Cliente', {
@@ -93,8 +94,12 @@ const Telefono = sequelize.define('Telefono', {
     imei: {
         type: DataTypes.BIGINT,
         allowNull: false
-    }
-});
+    },
+},
+    {timestamps: false,
+    freezeTableName: true,
+    tableName: 'Telefono' },
+);
 
 const Modelo = sequelize.define('Modelo', {
     idModelo: {
@@ -178,8 +183,29 @@ const Reventa = sequelize.define('Reventa', {
     }
 },
     { freezeTableName: true },
-    { tableName: 'dbo.ReparacionTipo' }
+    { tableName: 'dbo.Reventa' }
 );
+
+Telefono.hasMany(Reparacion, {foreignKey: 'idTelefono'});
+Reparacion.belongsTo(Telefono, { foreignKey: 'idTelefono' });
+
+Reparacion.hasMany(Cliente, { foreignKey: 'idCliente' });
+Cliente.belongsTo(Reparacion, { foreignKey: 'idCliente' });
+
+Reparacion.hasMany(ReparacionTipo, { foreignKey: 'idReparacionTipo' });
+ReparacionTipo.belongsTo(Reparacion, { foreignKey: 'idReparacionTipo' });
+
+Reparacion.hasMany(Reventa, { foreignKey: 'idReventa' });
+Reventa.belongsTo(Reparacion, { foreignKey: 'idReventa' });
+
+Telefono.hasMany(ModeloColor, { foreignKey: 'idModeloColor' });
+ModeloColor.belongsTo(Telefono, { foreignKey: 'idModeloColor' });
+
+ModeloColor.hasMany(Modelo, { foreignKey: 'idModelo' });
+Modelo.belongsTo(ModeloColor, { foreignKey: 'idModelo' });
+
+ModeloColor.hasMany(Color, { foreignKey: 'idColor' });
+Color.belongsTo(ModeloColor, { foreignKey: 'idColor' });
 
 
 async function authenticate()
@@ -199,8 +225,8 @@ async function synchronize()
 }
 
 async function findAll() {
-    const reparaciones = await Reparacion.findAll({
-        attributes: ['idReparacion', 'fecha']});
+    const reparaciones = await Reparacion.findAll({include: Telefono},{ 
+        attributes: ['idReparacion', 'idTelefono', 'fecha']});
     console.log(reparaciones.every(reparacion => reparacion instanceof Reparacion));
     const strReparaciones = JSON.stringify(reparaciones, null, 2);
     console.log(strReparaciones);
