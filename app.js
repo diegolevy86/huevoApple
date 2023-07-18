@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const port = 3333;
 const app = express();
 const validador = require(__dirname+"/functions.js");
+const database = require(__dirname+"/models.js");
 
 app.set('view engine', 'ejs');
 
@@ -19,3 +20,7 @@ app.listen(port, function () {
 });
 
 console.log(validador.validadorImei(355435071646557));
+
+database.authenticate();
+database.synchronize();
+database.findAll();
