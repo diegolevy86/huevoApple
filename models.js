@@ -297,37 +297,8 @@ async function buscarModeloColor(idMC){
     }
 };
 
-async function buscarReventa(idR) {
-    const rev = await Reventa.findOne({ where: { idReventa: idR }});
-    if (rev => rev instanceof Reventa) {
-        return rev.nombre;
-    }
-};
-
-
-
-/*
-async function buscarTodoModeloColor() {
-    let resul = {}
-    let ct = 0;
-    const modCol = await ModeloColor.findAll({ include: [Modelo, Color] });
-    if (modCol.every(mc => mc instanceof ModeloColor))
-    {
-        modCol.forEach(mc => {
-            let resu = {}
-            resu["idModeloColor"] = mc.idModeloColor;
-            resu["Modelo"] = mc.Modelo.nombre;
-            resu["Color"] = mc.Color.nombre;
-            resul[ct] = resu;
-            ct = ct + 1;
-        })
-        return resul;
-    }
-}
-*/
-
 async function close(){
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarReventa, close};
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, close};

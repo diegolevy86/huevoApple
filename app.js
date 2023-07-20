@@ -15,9 +15,9 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 
-app.get("/buscarBDfecha/:fech", async function (req, res) {
+app.post("/buscarBDfecha", async function (req, res) {
     let pack = []
-    let data = await database.buscarBDfecha(req.params.fech);
+    let data = await database.buscarBDfecha(req.body.fech);
     console.log(data);
     for (var i = 0; i < data.length; i++){
         let row = []
@@ -44,7 +44,7 @@ app.get("/buscarBDfecha/:fech", async function (req, res) {
         }
         pack.push(row);
     }
-    res.render("results",{pack: pack})
+    res.render("buscarBDfecha", { pack: pack });
 });
 
 app.listen(port, function () {
