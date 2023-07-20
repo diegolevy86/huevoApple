@@ -15,9 +15,9 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 
-app.get("/results", async function (req, res) {
+app.get("/buscarBDfecha/:fech", async function (req, res) {
     let pack = []
-    let data = await database.buscarBDfecha('2023-07-05');
+    let data = await database.buscarBDfecha(req.params.fech);
     console.log(data);
     for (var i = 0; i < data.length; i++){
         let row = []
@@ -33,12 +33,15 @@ app.get("/results", async function (req, res) {
         row.push(data[i].Fecha)
         row.push(data[i].Reparacion)
         row.push(data[i].Observaciones)
-        if (data[i].Reventa != 0)
+        row.push(data[i].Reventa)
+        if (data[i].Garantia)
         {
-            let r = await database.buscarReventa(data[i].Reventa);
-            row.push(r)
+            row.push("Sí");
         }
-        row.push(data[i].Garantia)
+        else
+        {
+            row.push("");
+        }
         pack.push(row);
     }
     res.render("results",{pack: pack})
