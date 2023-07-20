@@ -15,7 +15,10 @@
     <section class="titulo">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Huevo Apple</a>
+                <div>
+                    <img src="images/dancingJesus.gif" height="150px"></img>
+                    <a class="navbar-brand" href="#">Huevo Apple</a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -44,12 +47,12 @@
     <section class="busquedas">
         <div class="container-fluid row">
             <div class="busq col-md-4">
-                <div class="input-group mb-3">
+                <form class="input-group mb-3" action="/buscarBDimei" method="post">
                     <span class="input-group-text" id="inputGroup-sizing-default">Buscar por IMEI</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input"
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="imei"
                         aria-describedby="inputGroup-sizing-default" placeholder="6 últimos digitos">
                     <button type="submit" class="btn btn-primary">→</button>
-                </div>
+                </form>
             </div>
             <div class="busq col-md-4">
                 <form class="input-group mb-3" action="/buscarBDfecha" method="post">
@@ -437,6 +440,7 @@
 
     <!--    Footer    -->
     <section class="footer">
+        <p class ="footerText">Copyright 2023 Huevo Programación</p>
 
     </section>
 
