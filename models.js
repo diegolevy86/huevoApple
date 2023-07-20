@@ -246,25 +246,42 @@ async function buscarBDfecha(fecha1) {
     const reparaciones = await Reparacion.findAll({where: {fecha: fecha1}, include:
         [Telefono,
         Cliente,
-        ReparacionTipo]
+        ReparacionTipo,
+        Reventa]
         });
     if (reparaciones.every(reparacion => reparacion instanceof Reparacion))
     {
         
         reparaciones.forEach(rep => {
+                console.log(rep);
                 var resultado = {}
                 resultado["idReparacion"] = rep.idReparacion;
                 resultado["IMEI"] = rep.Telefono.imei;
                 resultado["idModeloColor"] = rep.Telefono.idModeloColor
-                resultado["Cliente"] = rep.Cliente.nombreYapellido;
-                resultado["Email"] = rep.Cliente.email;
-                resultado["Telefono"] = rep.Cliente.numeroTelefono;
+                if(rep.Cliente == null)
+                {
+                    resultado["Cliente"] = null;
+                    resultado["Email"] = null;
+                    resultado["Telefono"] = null;
+                }
+                else
+                {
+                    resultado["Cliente"] = rep.Cliente.nombreYapellido;
+                    resultado["Email"] = rep.Cliente.email;
+                    resultado["Telefono"] = rep.Cliente.numeroTelefono;
+                }
                 resultado["Codigo"] = rep.codigo;
                 resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
                 resultado["Fecha"] = rep.fecha;
                 resultado["Observaciones"] = rep.observaciones;
-                if (rep.idReventa != null) { resultado["Reventa"] = rep.idReventa }
-                else { resultado["Reventa"] = 0 }
+                if (rep.idReventa == null)
+                { 
+                    resultado["Reventa"] = null
+                }
+                else 
+                { 
+                    resultado["Reventa"] = rep.Reventum.nombre;
+                }
                 resultado["Garantia"] = rep.esGarantia;
                 resultadoFinal.push(resultado);
             });
