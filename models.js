@@ -12,7 +12,7 @@ const sequelize = new Sequelize('HuevoApple', 'diego01', 'diego03', {
     }
 });
 
-const Reparacion = sequelize.define('Reparacion',{
+const Reparacion = sequelize.define('Reparacion', {
     idReparacion: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -56,9 +56,11 @@ const Reparacion = sequelize.define('Reparacion',{
     }
 
 },
-     {timestamps: false,
-     freezeTableName:  true,
-     tableName: 'Reparacion'}
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'Reparacion'
+    }
 );
 
 const Cliente = sequelize.define('Cliente', {
@@ -67,7 +69,7 @@ const Cliente = sequelize.define('Cliente', {
         allowNull: false,
         primaryKey: true
     },
-        
+
     nombreYapellido: {
         type: DataTypes.STRING,
         allowNull: false
@@ -82,9 +84,11 @@ const Cliente = sequelize.define('Cliente', {
         type: DataTypes.STRING
     }
 },
-    {timestamps: false,
-    freezeTableName: true,
-    tableName: 'Cliente' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'Cliente'
+    }
 );
 
 const Telefono = sequelize.define('Telefono', {
@@ -104,9 +108,11 @@ const Telefono = sequelize.define('Telefono', {
         allowNull: false
     },
 },
-    {timestamps: false,
-    freezeTableName: true,
-    tableName: 'Telefono' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'Telefono'
+    }
 );
 
 const Modelo = sequelize.define('Modelo', {
@@ -124,7 +130,8 @@ const Modelo = sequelize.define('Modelo', {
     {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'Modelo' }
+        tableName: 'Modelo'
+    }
 );
 
 const Color = sequelize.define('Color', {
@@ -142,7 +149,8 @@ const Color = sequelize.define('Color', {
     {
         timestamps: false,
         freezeTableName: true,
-       tableName: 'Color'} 
+        tableName: 'Color'
+    }
 );
 
 const ModeloColor = sequelize.define('ModeloColor', {
@@ -164,8 +172,9 @@ const ModeloColor = sequelize.define('ModeloColor', {
 },
     {
         timestamps: false,
-        freezeTableName: true,  
-        tableName: 'ModeloColor' }  
+        freezeTableName: true,
+        tableName: 'ModeloColor'
+    }
 );
 
 const ReparacionTipo = sequelize.define('ReparacionTipo', {
@@ -183,7 +192,8 @@ const ReparacionTipo = sequelize.define('ReparacionTipo', {
     {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'ReparacionTipo' }
+        tableName: 'ReparacionTipo'
+    }
 );
 
 const Reventa = sequelize.define('Reventa', {
@@ -201,10 +211,11 @@ const Reventa = sequelize.define('Reventa', {
     {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'Reventa' }
+        tableName: 'Reventa'
+    }
 );
 
-Telefono.hasMany(Reparacion, {foreignKey: 'idTelefono'});
+Telefono.hasMany(Reparacion, { foreignKey: 'idTelefono' });
 Reparacion.belongsTo(Telefono, { foreignKey: 'idTelefono' });
 
 Cliente.hasMany(Reparacion, { foreignKey: 'idCliente' });
@@ -225,8 +236,7 @@ ModeloColor.belongsTo(Modelo, { foreignKey: 'idModelo' });
 Color.hasMany(ModeloColor, { foreignKey: 'idColor' });
 ModeloColor.belongsTo(Color, { foreignKey: 'idColor' });
 
-async function authenticate()
-{
+async function authenticate() {
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
@@ -235,37 +245,78 @@ async function authenticate()
     }
 };
 
-async function synchronize()
-{
+async function synchronize() {
     await sequelize.sync();
     console.log("All models were synchronized successfully.");
 }
 
 async function buscarBDfecha(fecha1) {
     var resultadoFinal = [];
-    const reparaciones = await Reparacion.findAll({where: {fecha: fecha1}, include:
-        [Telefono,
-        Cliente,
-        ReparacionTipo,
-        Reventa]
-        });
-    if (reparaciones.every(reparacion => reparacion instanceof Reparacion))
-    {
-        
+    const reparaciones = await Reparacion.findAll({
+        where: { fecha: fecha1 }, include:
+            [Telefono,
+                Cliente,
+                ReparacionTipo,
+                Reventa]
+    });
+    if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
+
         reparaciones.forEach(rep => {
-                console.log(rep);
+            var resultado = {}
+            resultado["idReparacion"] = rep.idReparacion;
+            resultado["IMEI"] = rep.Telefono.imei;
+            resultado["idModeloColor"] = rep.Telefono.idModeloColor
+            if (rep.Cliente == null) {
+                resultado["Cliente"] = null;
+                resultado["Email"] = null;
+                resultado["Telefono"] = null;
+            }
+            else {
+                resultado["Cliente"] = rep.Cliente.nombreYapellido;
+                resultado["Email"] = rep.Cliente.email;
+                resultado["Telefono"] = rep.Cliente.numeroTelefono;
+            }
+            resultado["Codigo"] = rep.codigo;
+            resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
+            resultado["Fecha"] = rep.fecha;
+            resultado["Observaciones"] = rep.observaciones;
+            if (rep.idReventa == null) {
+                resultado["Reventa"] = null
+            }
+            else {
+                resultado["Reventa"] = rep.Reventum.nombre;
+            }
+            resultado["Garantia"] = rep.esGarantia;
+            resultadoFinal.push(resultado);
+        });
+        return resultadoFinal;
+    }
+};
+
+async function buscarBDimei(imei) {
+    var resultadoFinal = [];
+    const reparaciones = await Reparacion.findAll({
+        include:
+                [Telefono,
+                Cliente,
+                ReparacionTipo,
+                Reventa]
+    });
+    if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
+
+        reparaciones.forEach(rep => {
+            console.log(rep.Telefono.imei % 1000000)
+            if (rep.Telefono.imei % 1000000 == imei) {
                 var resultado = {}
                 resultado["idReparacion"] = rep.idReparacion;
                 resultado["IMEI"] = rep.Telefono.imei;
                 resultado["idModeloColor"] = rep.Telefono.idModeloColor
-                if(rep.Cliente == null)
-                {
+                if (rep.Cliente == null) {
                     resultado["Cliente"] = null;
                     resultado["Email"] = null;
                     resultado["Telefono"] = null;
                 }
-                else
-                {
+                else {
                     resultado["Cliente"] = rep.Cliente.nombreYapellido;
                     resultado["Email"] = rep.Cliente.email;
                     resultado["Telefono"] = rep.Cliente.numeroTelefono;
@@ -274,31 +325,29 @@ async function buscarBDfecha(fecha1) {
                 resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
                 resultado["Fecha"] = rep.fecha;
                 resultado["Observaciones"] = rep.observaciones;
-                if (rep.idReventa == null)
-                { 
+                if (rep.idReventa == null) {
                     resultado["Reventa"] = null
                 }
-                else 
-                { 
+                else {
                     resultado["Reventa"] = rep.Reventum.nombre;
                 }
                 resultado["Garantia"] = rep.esGarantia;
                 resultadoFinal.push(resultado);
-            });
+            }
+        });
         return resultadoFinal;
     }
 };
 
-async function buscarModeloColor(idMC){
-    const modCol = await ModeloColor.findOne({where: {idModeloColor: idMC}, include: [Modelo, Color]});
-    if (modCol => modCol instanceof ModeloColor)
-    {
+async function buscarModeloColor(idMC) {
+    const modCol = await ModeloColor.findOne({ where: { idModeloColor: idMC }, include: [Modelo, Color] });
+    if (modCol => modCol instanceof ModeloColor) {
         return [modCol.Modelo.nombre, modCol.Color.nombre];
     }
 };
 
-async function close(){
+async function close() {
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, close};
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, close };
