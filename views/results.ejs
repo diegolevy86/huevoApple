@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+        <tr>
+            <th>idReparacion</th>
+            <th>IMEI</th>
+            <th>Modelo</th>
+            <th>Color</th>
+            <th>Cliente</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Código</th>
+            <th>Fecha</th>
+            <th>Reparación</th>
+            <th>Observaciones</th>
+            <th>Reventa</th>
+            <th>Garantía</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i=0;i<pack.length;i++){ %>
+        <tr>
+            <% for(var j=0;j<pack[0].length;j++){ %>
+            <td> <%= pack[i][j]%> </td> 
+        <% } %>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+</body>
+</html>

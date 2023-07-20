@@ -3,7 +3,13 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('HuevoApple', 'diego01', 'diego03', {
     host: 'localhost',
     port: 49500,
-    dialect: 'mssql'
+    dialect: 'mssql',
+    dialectOptions: {
+        options: {
+            useUTC: false,
+            dateFirst: 1
+        }
+    }
 });
 
 const Reparacion = sequelize.define('Reparacion',{
@@ -46,8 +52,9 @@ const Reparacion = sequelize.define('Reparacion',{
 
     fecha: {
         type: DataTypes.DATEONLY,
-        allowNull: false
-   }
+        allowNull: false,
+    }
+
 },
      {timestamps: false,
      freezeTableName:  true,
@@ -75,8 +82,9 @@ const Cliente = sequelize.define('Cliente', {
         type: DataTypes.STRING
     }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.Cliente' }
+    {timestamps: false,
+    freezeTableName: true,
+    tableName: 'Cliente' }
 );
 
 const Telefono = sequelize.define('Telefono', {
@@ -98,7 +106,7 @@ const Telefono = sequelize.define('Telefono', {
 },
     {timestamps: false,
     freezeTableName: true,
-    tableName: 'Telefono' },
+    tableName: 'Telefono' }
 );
 
 const Modelo = sequelize.define('Modelo', {
@@ -113,8 +121,10 @@ const Modelo = sequelize.define('Modelo', {
         allowNull: false
     }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.Modelo' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'Modelo' }
 );
 
 const Color = sequelize.define('Color', {
@@ -129,8 +139,10 @@ const Color = sequelize.define('Color', {
         allowNull: false
     }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.Color' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+       tableName: 'Color'} 
 );
 
 const ModeloColor = sequelize.define('ModeloColor', {
@@ -150,8 +162,10 @@ const ModeloColor = sequelize.define('ModeloColor', {
         allowNull: false
     }
 },
-    { freezeTableName: true },  
-    { tableName: 'dbo.ModeloColor' }  
+    {
+        timestamps: false,
+        freezeTableName: true,  
+        tableName: 'ModeloColor' }  
 );
 
 const ReparacionTipo = sequelize.define('ReparacionTipo', {
@@ -166,8 +180,10 @@ const ReparacionTipo = sequelize.define('ReparacionTipo', {
         allowNull: false
     }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.ReparacionTipo' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'ReparacionTipo' }
 );
 
 const Reventa = sequelize.define('Reventa', {
@@ -182,31 +198,32 @@ const Reventa = sequelize.define('Reventa', {
         allowNull: false
     }
 },
-    { freezeTableName: true },
-    { tableName: 'dbo.Reventa' }
+    {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'Reventa' }
 );
 
 Telefono.hasMany(Reparacion, {foreignKey: 'idTelefono'});
 Reparacion.belongsTo(Telefono, { foreignKey: 'idTelefono' });
 
-Reparacion.hasMany(Cliente, { foreignKey: 'idCliente' });
-Cliente.belongsTo(Reparacion, { foreignKey: 'idCliente' });
+Cliente.hasMany(Reparacion, { foreignKey: 'idCliente' });
+Reparacion.belongsTo(Cliente, { foreignKey: 'idCliente' });
 
-Reparacion.hasMany(ReparacionTipo, { foreignKey: 'idReparacionTipo' });
-ReparacionTipo.belongsTo(Reparacion, { foreignKey: 'idReparacionTipo' });
+ReparacionTipo.hasMany(Reparacion, { foreignKey: 'idReparacionTipo' });
+Reparacion.belongsTo(ReparacionTipo, { foreignKey: 'idReparacionTipo' });
 
-Reparacion.hasMany(Reventa, { foreignKey: 'idReventa' });
-Reventa.belongsTo(Reparacion, { foreignKey: 'idReventa' });
+Reventa.hasMany(Reparacion, { foreignKey: 'idReventa' });
+Reparacion.belongsTo(Reventa, { foreignKey: 'idReventa' });
 
-Telefono.hasMany(ModeloColor, { foreignKey: 'idModeloColor' });
-ModeloColor.belongsTo(Telefono, { foreignKey: 'idModeloColor' });
+ModeloColor.hasMany(Telefono, { foreignKey: 'idModeloColor' });
+Telefono.belongsTo(ModeloColor, { foreignKey: 'idModeloColor' });
 
-ModeloColor.hasMany(Modelo, { foreignKey: 'idModelo' });
-Modelo.belongsTo(ModeloColor, { foreignKey: 'idModelo' });
+Modelo.hasMany(ModeloColor, { foreignKey: 'idModelo' });
+ModeloColor.belongsTo(Modelo, { foreignKey: 'idModelo' });
 
-ModeloColor.hasMany(Color, { foreignKey: 'idColor' });
-Color.belongsTo(ModeloColor, { foreignKey: 'idColor' });
-
+Color.hasMany(ModeloColor, { foreignKey: 'idColor' });
+ModeloColor.belongsTo(Color, { foreignKey: 'idColor' });
 
 async function authenticate()
 {
@@ -224,16 +241,76 @@ async function synchronize()
     console.log("All models were synchronized successfully.");
 }
 
-async function findAll() {
-    const reparaciones = await Reparacion.findAll({include: Telefono},{ 
-        attributes: ['idReparacion', 'idTelefono', 'fecha']});
-    console.log(reparaciones.every(reparacion => reparacion instanceof Reparacion));
-    const strReparaciones = JSON.stringify(reparaciones, null, 2);
-    console.log(strReparaciones);
+async function buscarBDfecha(fecha1) {
+    var resultadoFinal = [];
+    const reparaciones = await Reparacion.findAll({where: {fecha: fecha1}, include:
+        [Telefono,
+        Cliente,
+        ReparacionTipo]
+        });
+    if (reparaciones.every(reparacion => reparacion instanceof Reparacion))
+    {
+        
+        reparaciones.forEach(rep => {
+                var resultado = {}
+                resultado["idReparacion"] = rep.idReparacion;
+                resultado["IMEI"] = rep.Telefono.imei;
+                resultado["idModeloColor"] = rep.Telefono.idModeloColor
+                resultado["Cliente"] = rep.Cliente.nombreYapellido;
+                resultado["Email"] = rep.Cliente.email;
+                resultado["Telefono"] = rep.Cliente.numeroTelefono;
+                resultado["Codigo"] = rep.codigo;
+                resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
+                resultado["Fecha"] = rep.fecha;
+                resultado["Observaciones"] = rep.observaciones;
+                if (rep.idReventa != null) { resultado["Reventa"] = rep.idReventa }
+                else { resultado["Reventa"] = 0 }
+                resultado["Garantia"] = rep.esGarantia;
+                resultadoFinal.push(resultado);
+            });
+        return resultadoFinal;
+    }
+};
+
+async function buscarModeloColor(idMC){
+    const modCol = await ModeloColor.findOne({where: {idModeloColor: idMC}, include: [Modelo, Color]});
+    if (modCol => modCol instanceof ModeloColor)
+    {
+        return [modCol.Modelo.nombre, modCol.Color.nombre];
+    }
+};
+
+async function buscarReventa(idR) {
+    const rev = await Reventa.findOne({ where: { idReventa: idR }});
+    if (rev => rev instanceof Reventa) {
+        return rev.nombre;
+    }
+};
+
+
+
+/*
+async function buscarTodoModeloColor() {
+    let resul = {}
+    let ct = 0;
+    const modCol = await ModeloColor.findAll({ include: [Modelo, Color] });
+    if (modCol.every(mc => mc instanceof ModeloColor))
+    {
+        modCol.forEach(mc => {
+            let resu = {}
+            resu["idModeloColor"] = mc.idModeloColor;
+            resu["Modelo"] = mc.Modelo.nombre;
+            resu["Color"] = mc.Color.nombre;
+            resul[ct] = resu;
+            ct = ct + 1;
+        })
+        return resul;
+    }
 }
+*/
 
 async function close(){
     await sequelize.close();
 };
 
-module.exports = {authenticate, synchronize, findAll, close};
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarReventa, close};
