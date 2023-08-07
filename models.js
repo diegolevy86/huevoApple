@@ -16,7 +16,8 @@ const Reparacion = sequelize.define('Reparacion', {
     idReparacion: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
 
     idTelefono: {
@@ -67,7 +68,8 @@ const Cliente = sequelize.define('Cliente', {
     idCliente: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
 
     nombreYapellido: {
@@ -95,7 +97,8 @@ const Telefono = sequelize.define('Telefono', {
     idTelefono: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
 
     idModeloColor: {
@@ -305,7 +308,6 @@ async function buscarBDimei(imei) {
     if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
 
         reparaciones.forEach(rep => {
-            console.log(rep.Telefono.imei % 1000000)
             if (rep.Telefono.imei % 1000000 == imei) {
                 var resultado = {}
                 resultado["idReparacion"] = rep.idReparacion;
@@ -346,8 +348,29 @@ async function buscarModeloColor(idMC) {
     }
 };
 
+async function cargarCliente(nomYap, e_mail, numTel){
+    const [ cli, created ] = await Cliente.findOrCreate({ where: { email: e_mail }, defaults: {nombreYapellido: nomYap, email: e_mail, numeroTelefono: numTel} });
+    if (cli => cli instanceof Cliente){
+        return [cli,created];
+    }
+}
+
+async function cargarTelefono(idMC, im){
+    const [tel, created] = await Telefono.findOrCreate({ where: { imei: im }, defaults: { idModeloColor: idMC, imei: im } });
+    if (tel => tel instanceof Telefono) {
+        return [tel, created];
+    }
+}
+
+async function cargarReparacion(nomYap, e_mail, numTel, idMC, im, idRT, idR, cod, gar, obs, fe){
+    const [ cli, createdCli ] = await cargarCliente(nomYap, e_mail, numTel);
+    const [ tel, createdTel ] = await cargarTelefono(idMC, im);
+    const rep = await Reparacion.create({idTelefono: tel.idTelefono, idCliente: cli.idCliente, idReparacionTipo: idRT, idReventa: idR, codigo: cod, esGarantia: gar, observaciones: obs, fecha: fe})
+    return [ rep, createdCli, createdTel ];
+}
+
 async function close() {
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, close };
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, cargarCliente, cargarReparacion, close };
