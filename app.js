@@ -102,7 +102,7 @@ app.post("/cargarReparacion", async function(req, res) {
         else {
             obs = req.body.obs;
         }
-        const [rep, createdCli, createdTel] = await database.cargarReparacion(req.body.cli, req.body.em, req.body.nt, moc, im, ret, rev, req.body.cod, gar, req.body.obs, req.body.fe);
+        const [rep, createdCli, createdTel] = await database.cargarReparacion(req.body.cli, req.body.em, req.body.nt, moc, im, ret, rev, req.body.cod, gar, obs, req.body.fe);
         if (createdCli){
             cc = "El cliente se cargó correctamente."
         } else {
