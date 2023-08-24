@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Cargar otra reparación</title>
+</head>
+
+<body>
+    <!--    Titulo    -->
+    <section class="titulo">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Huevo Apple</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="menu collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <form class="nav-link" aria-current="page" action="/" method="get"><button type="submit"
+                                    class="btn btn-primary">Inicio</button></form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Consultar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cargar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Estadisticas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <section class="container-fluid">
+        <div class="formu below col-md-4">
+            <h3>Cargar Otra Reparación</h3>
+
+            <form action="/otraReparacionCargada" method="post">
+                <p>IMEI: <%= pack[1] %>
+                </p>
+                <p>Modelo: <%= pack[2] %>
+                </p>
+                <p>Color: <%= pack[3] %>
+                </p>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Cliente</span>
+                    <input type="text" class="form-control" name="cli" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" placeholder="Juan Arias">
+                </div>
+
+                <div class="formItem form-check">
+                    <input class="form-check-input" name="cli2" type="checkbox" value="<%= pack[4] %>"
+                        id="flexCheckDefault">
+                    <label class="cliente form-check-label" for="flexCheckDefault">
+                        <%= pack[4] %>
+                    </label>
+                </div>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                    <input type="email" class="form-control" name="em" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" placeholder="juan.arias@hotmail.com">
+                </div>
+
+                <div class="formItem form-check">
+                    <input class="form-check-input" name="em2" type="checkbox" value="<%= pack[5] %>"
+                        id="flexCheckDefault">
+                    <label class="cliente form-check-label" for="flexCheckDefault">
+                        <%= pack[5] %>
+                    </label>
+                </div>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Código</span>
+                    <input type="text" class="form-control" name="cod" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" placeholder="123456">
+                </div>
+
+                <div class="formItem form-check">
+                    <input class="form-check-input" name="cod2" type="checkbox" value="<%= pack[7] %>"
+                        id="flexCheckDefault">
+                    <label class="cliente form-check-label" for="flexCheckDefault">
+                        <%= pack[7] %>
+                    </label>
+                </div>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Teléfono</span>
+                    <input type="text" class="form-control" name="nt" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" placeholder="2215001234">
+                </div>
+
+                <div class="formItem form-check">
+                    <input class="form-check-input" name="nt2" type="checkbox" value="<%= pack[6] %>"
+                        id="flexCheckDefault">
+                    <label class="cliente form-check-label" for="flexCheckDefault">
+                        <%= pack[6] %>
+                    </label>
+                </div>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Reparación</span>
+                    <input class="form-control modcol" name="rt" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" list="reparacionesCR" id="modcol7"
+                        placeholder="pantalla">
+                    <datalist id="reparacionesCR">
+                        <option value="Cambio pantalla">
+                        <option value="Cambio batería">
+                        <option value="Cambio carcasa / módulo trasero">
+                        <option value="Cambio cámara trasera">
+                        <option value="Cambio flex cámara frontal / Sensor proximidad">
+                        <option value="Cambio botón home">
+                        <option value="Arreglo de placa otros">
+                        <option value="Arreglo de placa audio">
+                        <option value="Cambio flex botones">
+                        <option value="Cambio dock">
+                        <option value="Cambio flex parlante auricular / sensores (face ID)">
+                        <option value="Limpieza parlante auricular">
+                        <option value="Cambio antenas wifi">
+                        <option value="Revisión">
+                        <option value="Cambio flex varios">
+                        <option value="Cambio vidrio cámara">
+                        <option value="Vuelto para atrás">
+                        <option value="P. pegada">
+                        <option value="Cambio parlante altavoz">
+                        <option value="Flasheo">
+                        <option value="Cambio bt. con cambio de celda">
+                        <option value="Cambio parlante auricular">
+                    </datalist>
+                </div>
+
+                <div class="formItem input-group">
+                    <span class="input-group-text">Observaciones</span>
+                    <textarea class="form-control" name="obs" aria-label="With textarea"></textarea>
+                </div>
+
+                <div class="formItem input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Reventa</span>
+                    <input class="form-control modcol" name="rv" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default" list="reventasCR" id="modcol8"
+                        placeholder="Reventa">
+                    <datalist id="reventasCR">
+                        <option value="Fede">
+                        <option value="Fantech">
+                        <option value="Guido">
+                        <option value="Santi">
+                        <option value="Martín">
+                        <option value="Jona">
+                        <option value="Varios">
+                        <option value="Manu Lokura">
+                    </datalist>
+                </div>
+
+                <div class="formItem form-check">
+                    <input class="form-check-input" name="gar" type="checkbox" value="1" id="flexCheckDefault">
+                    <label class="garantia form-check-label" for="flexCheckDefault">Garantía</label>
+                </div>
+
+                <button class="formItem but btn btn-primary" type="submit" value="<%= pack %>"
+                    name="pack">Cargar</button>
+
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

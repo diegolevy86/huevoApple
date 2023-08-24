@@ -57,6 +57,7 @@
                 <th>Observaciones</th>
                 <th>Reventa</th>
                 <th>Garantía</th>
+                <th>Agregar</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +68,10 @@
                             <%= pack[i][j]%>
                         </td>
                         <% } %>
+                        <td>
+                            <form action="/cargarOtraReparacion" method="post">
+                            <button type="submit" class="btn btn-primary" value="<%= pack[i] %>" name="pack">+</button></td>
+                            </form>
                 </tr>
                 <% } %>
         </tbody>

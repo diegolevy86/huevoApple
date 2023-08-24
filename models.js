@@ -307,7 +307,11 @@ async function buscarBDimei(imei) {
     });
     if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
 
-        reparaciones.forEach(rep => {
+        const repas = reparaciones.sort(function(a, b) {
+            return new Date(a.fecha) - new Date(b.fecha);
+        });
+
+        repas.forEach(rep => {
             if (rep.Telefono.imei % 1000000 == imei) {
                 var resultado = {}
                 resultado["idReparacion"] = rep.idReparacion;
