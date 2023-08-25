@@ -424,8 +424,16 @@ async function cargarReparacion(nomYap, e_mail, numTel, idMC, im, idRT, idR, cod
     return [rep, createdCli, createdTel];
 }
 
+async function cargarReparacionSinCliente(idMC, im, idRT, idR, cod, gar, obs, fe) {
+    const [tel, createdTel] = await cargarTelefono(idMC, im);
+    const rep = await Reparacion.create({ idTelefono: tel.idTelefono, idCliente: null, idReparacionTipo: idRT, idReventa: idR, codigo: cod, esGarantia: gar, observaciones: obs, fecha: fe })
+    return [rep, createdTel];
+}
+
+
+
 async function close() {
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, close };
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, cargarReparacionSinCliente, close };

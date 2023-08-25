@@ -155,42 +155,42 @@
 
                 <h3>Cargar Reparación Sin Cliente Hoy</h3>
 
-                <form>
+                <form action="/reparacionHoySinClienteCargada" method="post">
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">IMEI</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input"
+                        <input type="text" class="form-control" aria-label="Sizing example input" name="imei"
                             aria-describedby="inputGroup-sizing-default" placeholder="350000000000000">
                     </div>
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Modelo y color</span>
-                        <input class="form-control modcol" aria-label="Sizing example input"
+                        <input class="form-control modcol" aria-label="Sizing example input" name="mc"
                             aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol"
                             placeholder="6S negro">
                     </div>
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Código</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input"
+                        <input type="text" class="form-control" aria-label="Sizing example input" name="cod"
                             aria-describedby="inputGroup-sizing-default" placeholder="123456">
                     </div>
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Reparación</span>
-                        <input class="form-control modcol" aria-label="Sizing example input"
+                        <input class="form-control modcol" aria-label="Sizing example input" name="rt"
                             aria-describedby="inputGroup-sizing-default" list="reparaciones" id="modcol4"
                             placeholder="pantalla">
                     </div>
 
                     <div class="formItem input-group">
                         <span class="input-group-text">Observaciones</span>
-                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" aria-label="With textarea" name="obs"></textarea>
                     </div>
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Reventa</span>
-                        <input class="form-control modcol" aria-label="Sizing example input"
+                        <input class="form-control modcol" aria-label="Sizing example input" name="rv"
                             aria-describedby="inputGroup-sizing-default" list="reventas" id="modcol5"
                             placeholder="Reventa">
                     </div>
