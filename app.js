@@ -107,6 +107,54 @@ app.post("/buscarBDnombre", async function (req, res) {
     res.render("buscarBDnombre", { pack: pack });
 });
 
+app.post("/reparacionHoyCargada", async function (req, res) {
+    const fecha = new Date();
+    const fe = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
+    let im = Number(req.body.imei);
+    if (functions.validadorImei(im) != 0) {
+        res.render("error", { message: "IMEI incorrecto" });
+    }
+    else {
+        let gar = "";
+        let cc = "";
+        let ct = "";
+        let obs = "";
+        let nt = "";
+        let moc = functions.numeroModeloColor(req.body.mc);
+        let ret = functions.numeroReparacionTipo(req.body.rt);
+        let rev = functions.numeroReventa(req.body.rv);
+        if (req.body.gar == "1") {
+            gar = 1;
+        } else {
+            gar = 0;
+        }
+        if (req.body.obs == "") {
+            obs = null;
+        }
+        else {
+            obs = req.body.obs;
+        }
+        if (req.body.nt == "") {
+            nt = null;
+        } else {
+            nt = req.body.nt;
+        }
+        const [rep, createdCli, createdTel] = await database.cargarReparacion(req.body.cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, fe);
+        if (createdCli) {
+            cc = "El cliente se cargó correctamente."
+        } else {
+            cc = "El cliente ya existía."
+        }
+        if (createdTel) {
+            ct = "El equipo se cargó correctamente."
+        } else {
+            ct = "El equipo ya existía."
+        }
+        res.render("reparacionCargada", { imei6: (im % 1000000), messageCli: cc, messageTel: ct, message: "La reparación se cargó correctamente con ID: " + rep.idReparacion });
+    }
+
+});
+
 app.post("/reparacionCargada", async function (req, res) {
     let im = Number(req.body.imei);
     if (functions.validadorImei(im) != 0) {
@@ -160,7 +208,7 @@ app.post("/cargarOtraReparacion", function (req, res) {
 
 app.post("/otraReparacionCargada", async function (req, res) {
     const fecha = new Date();
-    fechaStr = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
+    const fechaStr = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
     let pack = req.body.pack.split(",");
     let im = Number(pack[1]);
     if (functions.validadorImei(im) != 0) {
