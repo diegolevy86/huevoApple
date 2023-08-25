@@ -63,12 +63,12 @@
                 </form>
             </div>
             <div class="busq col-md-4">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Buscar por cliente</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default" placeholder="Juan Lopez">
-                    <button type="submit" class="btn btn-primary">→</button>
-                </div>
+                <form class="input-group mb-3" action="/buscarBDnombre" method="post">
+                <span class="input-group-text" id="inputGroup-sizing-default">Buscar por cliente</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" name="nYa"
+                    aria-describedby="inputGroup-sizing-default" placeholder="Juan Lopez">
+                <button type="submit" class="btn btn-primary">→</button>
+                </form>
             </div>
         </div>
 
@@ -94,13 +94,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol1"
                             placeholder="6S negro">
-                        <datalist id="datalistOptions">
-                            <option value="iPhone 6S negro">
-                            <option value="iPhone 7 negro">
-                            <option value="iPhone 8 blanco">
-                            <option value="iPhone 11 PRO verde oscuro">
-                            <option value="iPhone 13 azul">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group mb-3">
@@ -132,13 +125,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reparaciones" id="modcol2"
                             placeholder="pantalla">
-                        <datalist id="reparaciones">
-                            <option value="Cambio pantalla">
-                            <option value="Cambio batería">
-                            <option value="Cambio cámara trasera">
-                            <option value="Cambio carcasa">
-                            <option value="Cambio dock">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group">
@@ -151,16 +137,7 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reventas" id="modcol3"
                             placeholder="Reventa">
-                        <datalist id="reventas">
-                            <option value="Fede">
-                            <option value="Martín">
-                            <option value="Santi">
-                            <option value="Guido">
-                            <option value="Otro">
-                        </datalist>
                     </div>
-
-
 
                     <div class="formItem form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -190,13 +167,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol"
                             placeholder="6S negro">
-                        <datalist id="datalistOptions">
-                            <option value="iPhone 6S negro">
-                            <option value="iPhone 7 negro">
-                            <option value="iPhone 8 blanco">
-                            <option value="iPhone 11 PRO verde oscuro">
-                            <option value="iPhone 13 azul">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group mb-3">
@@ -210,13 +180,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reparaciones" id="modcol4"
                             placeholder="pantalla">
-                        <datalist id="reparaciones">
-                            <option value="Cambio pantalla">
-                            <option value="Cambio batería">
-                            <option value="Cambio cámara trasera">
-                            <option value="Cambio carcasa">
-                            <option value="Cambio dock">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group">
@@ -224,25 +187,17 @@
                         <textarea class="form-control" aria-label="With textarea"></textarea>
                     </div>
 
-
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Reventa</span>
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reventas" id="modcol5"
                             placeholder="Reventa">
-                        <datalist id="reventas">
-                            <option value="Fede">
-                            <option value="Martín">
-                            <option value="Santi">
-                            <option value="Guido">
-                            <option value="Otro">
-                        </datalist>
                     </div>
 
                     <div class="formItem form-check">
                         <input class="form-check-input" type="checkbox" value="" name="1" id="flexCheckDefault">
                         <label class="garantia form-check-label" for="flexCheckDefault">Garantía</label>
-                        
+
                     </div>
 
                     <button class="formItem but btn btn-primary" type="submit">Cargar</button>
@@ -265,9 +220,9 @@
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Modelo y color</span>
                         <input class="form-control modcol" name="mc" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" list="datalistOptionsCR" id="modcol6"
+                            aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol6"
                             placeholder="6S negro">
-                        <datalist id="datalistOptionsCR">
+                        <datalist id="datalistOptions">
                             <option value="iPhone 5C Blanco">
                             <option value="iPhone 5C Amarillo">
                             <option value="iPhone 5C Coral">
@@ -391,9 +346,9 @@
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Reparación</span>
                         <input class="form-control modcol" name="rt" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" list="reparacionesCR" id="modcol7"
+                            aria-describedby="inputGroup-sizing-default" list="reparaciones" id="modcol7"
                             placeholder="pantalla">
-                        <datalist id="reparacionesCR">
+                        <datalist id="reparaciones">
                             <option value="Cambio pantalla">
                             <option value="Cambio batería">
                             <option value="Cambio carcasa / módulo trasero">
@@ -434,9 +389,9 @@
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Reventa</span>
                         <input class="form-control modcol" name="rv" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" list="reventasCR" id="modcol8"
+                            aria-describedby="inputGroup-sizing-default" list="reventas" id="modcol8"
                             placeholder="Reventa">
-                        <datalist id="reventasCR">
+                        <datalist id="reventas">
                             <option value="Fede">
                             <option value="Fantech">
                             <option value="Guido">
@@ -480,13 +435,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol9"
                             placeholder="6S negro">
-                        <datalist id="datalistOptions">
-                            <option value="iPhone 6S negro">
-                            <option value="iPhone 7 negro">
-                            <option value="iPhone 8 blanco">
-                            <option value="iPhone 11 PRO verde oscuro">
-                            <option value="iPhone 13 azul">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group mb-3">
@@ -500,13 +448,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reparaciones" id="modcol10"
                             placeholder="pantalla">
-                        <datalist id="reparaciones">
-                            <option value="Cambio pantalla">
-                            <option value="Cambio batería">
-                            <option value="Cambio cámara trasera">
-                            <option value="Cambio carcasa">
-                            <option value="Cambio dock">
-                        </datalist>
                     </div>
 
                     <div class="formItem input-group mb-3">
@@ -526,13 +467,6 @@
                         <input class="form-control modcol" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" list="reventas" id="modcol11"
                             placeholder="Reventa">
-                        <datalist id="reventas">
-                            <option value="Fede">
-                            <option value="Martín">
-                            <option value="Santi">
-                            <option value="Guido">
-                            <option value="Otro">
-                        </datalist>
                     </div>
 
                     <div class="formItem form-check">
@@ -556,7 +490,8 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <script src="scripts/index.js" charset="utf-8">
     </script>
 </body>

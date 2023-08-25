@@ -300,14 +300,14 @@ async function buscarBDimei(imei) {
     var resultadoFinal = [];
     const reparaciones = await Reparacion.findAll({
         include:
-                [Telefono,
+            [Telefono,
                 Cliente,
                 ReparacionTipo,
                 Reventa]
     });
     if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
 
-        const repas = reparaciones.sort(function(a, b) {
+        const repas = reparaciones.sort(function (a, b) {
             return new Date(a.fecha) - new Date(b.fecha);
         });
 
@@ -345,6 +345,57 @@ async function buscarBDimei(imei) {
     }
 };
 
+async function buscarBDnombre(nYa) {
+    var resultadoFinal = [];
+    const reparaciones = await Reparacion.findAll({
+        include:
+            [Telefono,
+                Cliente,
+                ReparacionTipo,
+                Reventa]
+    });
+    if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
+
+        const repas = reparaciones.sort(function (a, b) {
+            return new Date(a.fecha) - new Date(b.fecha);
+        });
+
+        repas.forEach(rep => {
+            if (rep.Cliente != null) {
+                if (rep.Cliente.nombreYapellido.includes(nYa)) {
+                    var resultado = {}
+                    resultado["idReparacion"] = rep.idReparacion;
+                    resultado["IMEI"] = rep.Telefono.imei;
+                    resultado["idModeloColor"] = rep.Telefono.idModeloColor
+                    if (rep.Cliente == null) {
+                        resultado["Cliente"] = null;
+                        resultado["Email"] = null;
+                        resultado["Telefono"] = null;
+                    }
+                    else {
+                        resultado["Cliente"] = rep.Cliente.nombreYapellido;
+                        resultado["Email"] = rep.Cliente.email;
+                        resultado["Telefono"] = rep.Cliente.numeroTelefono;
+                    }
+                    resultado["Codigo"] = rep.codigo;
+                    resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
+                    resultado["Fecha"] = rep.fecha;
+                    resultado["Observaciones"] = rep.observaciones;
+                    if (rep.idReventa == null) {
+                        resultado["Reventa"] = null
+                    }
+                    else {
+                        resultado["Reventa"] = rep.Reventum.nombre;
+                    }
+                    resultado["Garantia"] = rep.esGarantia;
+                    resultadoFinal.push(resultado);
+                }
+            }
+        });
+        return resultadoFinal;
+    }
+};
+
 async function buscarModeloColor(idMC) {
     const modCol = await ModeloColor.findOne({ where: { idModeloColor: idMC }, include: [Modelo, Color] });
     if (modCol => modCol instanceof ModeloColor) {
@@ -352,29 +403,29 @@ async function buscarModeloColor(idMC) {
     }
 };
 
-async function cargarCliente(nomYap, e_mail, numTel){
-    const [ cli, created ] = await Cliente.findOrCreate({ where: { email: e_mail }, defaults: {nombreYapellido: nomYap, email: e_mail, numeroTelefono: numTel} });
-    if (cli => cli instanceof Cliente){
-        return [cli,created];
+async function cargarCliente(nomYap, e_mail, numTel) {
+    const [cli, created] = await Cliente.findOrCreate({ where: { email: e_mail }, defaults: { nombreYapellido: nomYap, email: e_mail, numeroTelefono: numTel } });
+    if (cli => cli instanceof Cliente) {
+        return [cli, created];
     }
 }
 
-async function cargarTelefono(idMC, im){
+async function cargarTelefono(idMC, im) {
     const [tel, created] = await Telefono.findOrCreate({ where: { imei: im }, defaults: { idModeloColor: idMC, imei: im } });
     if (tel => tel instanceof Telefono) {
         return [tel, created];
     }
 }
 
-async function cargarReparacion(nomYap, e_mail, numTel, idMC, im, idRT, idR, cod, gar, obs, fe){
-    const [ cli, createdCli ] = await cargarCliente(nomYap, e_mail, numTel);
-    const [ tel, createdTel ] = await cargarTelefono(idMC, im);
-    const rep = await Reparacion.create({idTelefono: tel.idTelefono, idCliente: cli.idCliente, idReparacionTipo: idRT, idReventa: idR, codigo: cod, esGarantia: gar, observaciones: obs, fecha: fe})
-    return [ rep, createdCli, createdTel ];
+async function cargarReparacion(nomYap, e_mail, numTel, idMC, im, idRT, idR, cod, gar, obs, fe) {
+    const [cli, createdCli] = await cargarCliente(nomYap, e_mail, numTel);
+    const [tel, createdTel] = await cargarTelefono(idMC, im);
+    const rep = await Reparacion.create({ idTelefono: tel.idTelefono, idCliente: cli.idCliente, idReparacionTipo: idRT, idReventa: idR, codigo: cod, esGarantia: gar, observaciones: obs, fecha: fe })
+    return [rep, createdCli, createdTel];
 }
 
 async function close() {
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, cargarCliente, cargarReparacion, close };
+module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, close };
