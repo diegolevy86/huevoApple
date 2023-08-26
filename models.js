@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize('HuevoApple', 'diego01', 'diego03', {
     host: 'localhost',
-    port: 49918,
+    port: 49500,
     dialect: 'mssql',
     dialectOptions: {
         options: {
