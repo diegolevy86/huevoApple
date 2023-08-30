@@ -1,8 +1,8 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Op } = require('sequelize');
 
 const sequelize = new Sequelize('HuevoApple', 'diego01', 'diego03', {
     host: 'localhost',
-    port: 49500,
+    port: 49918,
     dialect: 'mssql',
     dialectOptions: {
         options: {
@@ -396,6 +396,52 @@ async function buscarBDnombre(nYa) {
     }
 };
 
+async function buscarBDentreFechas(fecha1, fecha2) {
+    var resultadoFinal = [];
+    const reparaciones = await Reparacion.findAll({
+        where: { fecha: { [Op.between]: [fecha1, fecha2] } }, include:
+            [Telefono,
+                Cliente,
+                ReparacionTipo,
+                Reventa]
+    });
+    if (reparaciones.every(reparacion => reparacion instanceof Reparacion)) {
+
+        const repas = reparaciones.sort(function (a, b) {
+            return new Date(a.fecha) - new Date(b.fecha);
+        });
+        repas.forEach(rep => {
+            var resultado = {}
+            resultado["idReparacion"] = rep.idReparacion;
+            resultado["IMEI"] = rep.Telefono.imei;
+            resultado["idModeloColor"] = rep.Telefono.idModeloColor
+            if (rep.Cliente == null) {
+                resultado["Cliente"] = null;
+                resultado["Email"] = null;
+                resultado["Telefono"] = null;
+            }
+            else {
+                resultado["Cliente"] = rep.Cliente.nombreYapellido;
+                resultado["Email"] = rep.Cliente.email;
+                resultado["Telefono"] = rep.Cliente.numeroTelefono;
+            }
+            resultado["Codigo"] = rep.codigo;
+            resultado["Reparacion"] = rep.ReparacionTipo.descripcion;
+            resultado["Fecha"] = rep.fecha;
+            resultado["Observaciones"] = rep.observaciones;
+            if (rep.idReventa == null) {
+                resultado["Reventa"] = null
+            }
+            else {
+                resultado["Reventa"] = rep.Reventum.nombre;
+            }
+            resultado["Garantia"] = rep.esGarantia;
+            resultadoFinal.push(resultado);
+        });
+        return resultadoFinal;
+    }
+};
+
 async function buscarModeloColor(idMC) {
     const modCol = await ModeloColor.findOne({ where: { idModeloColor: idMC }, include: [Modelo, Color] });
     if (modCol => modCol instanceof ModeloColor) {
@@ -436,4 +482,7 @@ async function close() {
     await sequelize.close();
 };
 
-module.exports = { authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, cargarReparacionSinCliente, close };
+module.exports = {
+    authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, cargarReparacionSinCliente,
+    buscarBDentreFechas, close
+};

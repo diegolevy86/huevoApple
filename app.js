@@ -15,6 +15,10 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 
+app.get("/consultas", function(req, res){
+    res.render("consultas");
+});
+
 app.post("/buscarBDfecha", async function (req, res) {
     try {
         let pack = []
@@ -199,6 +203,48 @@ app.post("/reparacionHoySinClienteCargada", async function (req, res) {
 
 });
 
+app.post("/reparacionSinClienteCargada", async function (req, res) {
+    let im = Number(req.body.imei);
+    if (functions.validadorImei(im) != 0) {
+        res.render("error", { message: "IMEI incorrecto" });
+    }
+    else {
+        let gar = "";
+        let cc = "";
+        let ct = "";
+        let obs = "";
+        let nt = "";
+        let moc = functions.numeroModeloColor(req.body.mc);
+        let ret = functions.numeroReparacionTipo(req.body.rt);
+        let rev = functions.numeroReventa(req.body.rv);
+        if (req.body.gar == "1") {
+            gar = 1;
+        } else {
+            gar = 0;
+        }
+        if (req.body.obs == "") {
+            obs = null;
+        }
+        else {
+            obs = req.body.obs;
+        }
+        if (req.body.nt == "") {
+            nt = null;
+        } else {
+            nt = req.body.nt;
+        }
+        const [rep, createdTel] = await database.cargarReparacionSinCliente(moc, im, ret, rev, req.body.cod, gar, obs, req.body.fe);
+        cc = "La reparación se cargó sin cliente"
+        if (createdTel) {
+            ct = "El equipo se cargó correctamente."
+        } else {
+            ct = "El equipo ya existía."
+        }
+        res.render("reparacionCargada", { imei6: (im % 1000000), messageCli: cc, messageTel: ct, message: "La reparación se cargó correctamente con ID: " + rep.idReparacion });
+    }
+
+});
+
 app.post("/reparacionCargada", async function (req, res) {
     let im = Number(req.body.imei);
     if (functions.validadorImei(im) != 0) {
@@ -311,6 +357,44 @@ app.post("/otraReparacionCargada", async function (req, res) {
 
         const [rep, createdCli, createdTel] = await database.cargarReparacion(cli, em, nt, moc, im, ret, rev, cod, gar, obs, fechaStr);
         res.render("otraReparacionCargada", { imei6: (im % 1000000), message: "La reparación se cargó correctamente con ID: " + rep.idReparacion });
+    }
+});
+
+app.post("/buscarBDentreFechas", async function (req, res) {
+    try {
+        let pack = []
+        //f1 = new Date(req.body.fech1)
+        //f2 = new Date(req.body.fech2)
+        //console.log(f1, f2)
+        let data = await database.buscarBDentreFechas(req.body.fech1, req.body.fech2);
+        for (var i = 0; i < data.length; i++) {
+            let row = []
+            row.push(data[i].idReparacion)
+            row.push(data[i].IMEI)
+            let dato = await database.buscarModeloColor(data[i].idModeloColor);
+            row.push(dato[0])
+            row.push(dato[1])
+            row.push(data[i].Cliente)
+            row.push(data[i].Email)
+            row.push(data[i].Telefono)
+            row.push(data[i].Codigo)
+            row.push(data[i].Fecha)
+            row.push(data[i].Reparacion)
+            row.push(data[i].Observaciones)
+            row.push(data[i].Reventa)
+            if (data[i].Garantia) {
+                row.push("Sí");
+            }
+            else {
+                row.push("");
+            }
+            pack.push(row);
+        }
+        res.render("buscarBDentreFechas", { pack: pack });
+    }
+    catch (error) {
+        console.log(error)
+        res.render("error", { message: "Fechas inválidas o inexistentes. Vuelva a intentarlo." });
     }
 });
 
