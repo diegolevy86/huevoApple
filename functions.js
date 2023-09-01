@@ -1,3 +1,5 @@
+const https = require("https");
+
 let validadorImei = function (imei) {
     let num1 = Math.trunc(imei / 10000000000000);
     if (((num1 != 1) && (num1 != 35)) && (num1 != 99)) {
@@ -175,4 +177,42 @@ function numeroReventa(rv) {
     }
 }
 
-module.exports = { validadorImei, numeroModeloColor, numeroReparacionTipo, numeroReventa };
+function darFechaHoy() {
+    const fecha = new Date();
+    let dia = 7;
+    switch (fecha.getDay()) {
+        case 1: dia = "Lunes";
+            break;
+        case 2: dia = "Martes";
+            break;
+        case 3: dia = "Miércoles";
+            break;
+        case 4: dia = "Jueves";
+            break;
+        case 5: dia = "Viernes";
+            break;
+        case 6: dia = "Sábado";
+            break;
+        case 0: dia = "Domingo";
+            break;
+        default: dia = "que pasó???";
+            break;
+    }
+    return dia + ", " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
+}
+
+function obtenerTiempo() {
+    const apiKey = "7a943b5b02d635529f838b01a6d841e5";
+    const url = "https://api.openweathermap.org/data/2.5/weather?id=" + "3432043" + "&appid=" + apiKey + "&units=metric";
+    https.get(url, function (response) {
+        response.on("data", function (data) {
+            const weatherData = JSON.parse(data);
+            console.log(weatherData);
+            const icon = weatherData.weather[0].icon;
+            const iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+            return [weatherData.main.temp, iconURL];
+        });
+    });
+}
+
+module.exports = { validadorImei, numeroModeloColor, numeroReparacionTipo, numeroReventa, darFechaHoy, obtenerTiempo };

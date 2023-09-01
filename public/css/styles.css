@@ -5,7 +5,8 @@
 
 .navbar-brand
 {
-    font-size: 3rem;
+    font-size: 5rem;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .menu
@@ -25,11 +26,16 @@
     padding-bottom: 5%;
 }
 
-.formu
+.formu, .banner
 {
     border: 2px solid lightgray;
     border-radius: 7px;
     padding: 2%;
+}
+
+.infor1
+{
+    text-align: right;
 }
 
 #modcol1, #modcol2, #modcol3, #modcol4, #modcol5, #modcol6, #modcol7, #modcol8, #modcol9, #modcol10, #modcol11

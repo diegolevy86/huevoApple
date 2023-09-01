@@ -1,6 +1,8 @@
 var num = 0;
-document.querySelector(".imeiBox").addEventListener("keydown", function(event)
-{
+var ib = document.querySelectorAll(".imeiBox")
+for (var i = 0; i < ib.length; i++)
+    {
+        ib[i].addEventListener("keydown", function(event){
     console.log(event);
     if (event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5" 
         || event.key == "6" || event.key == "7" || event.key == "8" || event.key == "9" || event.key == "0")
@@ -10,11 +12,19 @@ document.querySelector(".imeiBox").addEventListener("keydown", function(event)
             console.log(num);
             if (validadorImei(num) == 0)
             {
-                document.querySelector(".imeiTitle").innerHTML = "IMEI ✔";
+                var it = document.querySelectorAll(".imeiTitle");
+                for (var j = 0; j < it.length; j++)
+                {
+                    it[j].innerHTML = "IMEI ✔";
+                }
             }
             else
             {
-                document.querySelector(".imeiTitle").innerHTML = "IMEI ❌";
+                var it = document.querySelectorAll(".imeiTitle");
+                for (var k = 0; k < it.length; k++)
+                {
+                    it[k].innerHTML = "IMEI ❌";
+                }
             }
         }
     else
@@ -25,6 +35,7 @@ document.querySelector(".imeiBox").addEventListener("keydown", function(event)
         }
     }
 });
+}
 
 let validadorImei = function (imei) {
     let num1 = Math.trunc(imei / 10000000000000);

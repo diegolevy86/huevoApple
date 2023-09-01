@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+var _ = require("lodash");
 const port = 3333;
 const app = express();
 const functions = require(__dirname + "/functions.js");
@@ -12,8 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-    res.render("home");
+    const fecha = functions.darFechaHoy();
+    //const weather = functions.obtenerTiempo();
+    res.render("home", {fecha: fecha});
 });
+
 
 app.get("/consultas", function(req, res){
     res.render("consultas");
@@ -46,7 +50,7 @@ app.post("/buscarBDfecha", async function (req, res) {
             }
             pack.push(row);
         }
-        res.render("buscarBDfecha", { pack: pack });
+        res.render("buscarBD", { pack: pack });
     }
     catch (error) {
         res.render("error", { message: "Fecha inválida o inexistente. Vuelva a intentarlo." });
@@ -79,7 +83,7 @@ app.post("/buscarBDimei", async function (req, res) {
         }
         pack.push(row);
     }
-    res.render("buscarBDimei", { pack: pack });
+    res.render("buscarBD", { pack: pack });
 });
 
 app.post("/buscarBDnombre", async function (req, res) {
@@ -108,7 +112,7 @@ app.post("/buscarBDnombre", async function (req, res) {
         }
         pack.push(row);
     }
-    res.render("buscarBDnombre", { pack: pack });
+    res.render("buscarBD", { pack: pack });
 });
 
 app.post("/reparacionHoyCargada", async function (req, res) {
@@ -119,6 +123,7 @@ app.post("/reparacionHoyCargada", async function (req, res) {
         res.render("error", { message: "IMEI incorrecto" });
     }
     else {
+        let cli = _.startCase(req.body.cli);
         let gar = "";
         let cc = "";
         let ct = "";
@@ -143,7 +148,7 @@ app.post("/reparacionHoyCargada", async function (req, res) {
         } else {
             nt = req.body.nt;
         }
-        const [rep, createdCli, createdTel] = await database.cargarReparacion(req.body.cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, fe);
+        const [rep, createdCli, createdTel] = await database.cargarReparacion(cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, fe);
         if (createdCli) {
             cc = "El cliente se cargó correctamente."
         } else {
@@ -251,6 +256,7 @@ app.post("/reparacionCargada", async function (req, res) {
         res.render("error", { message: "IMEI incorrecto" });
     }
     else {
+        let cli = _.startCase(req.body.cli);
         let gar = "";
         let cc = "";
         let ct = "";
@@ -275,7 +281,7 @@ app.post("/reparacionCargada", async function (req, res) {
         } else {
             nt = req.body.nt;
         }
-        const [rep, createdCli, createdTel] = await database.cargarReparacion(req.body.cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, req.body.fe);
+        const [rep, createdCli, createdTel] = await database.cargarReparacion(cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, req.body.fe);
         if (createdCli) {
             cc = "El cliente se cargó correctamente."
         } else {
@@ -363,9 +369,6 @@ app.post("/otraReparacionCargada", async function (req, res) {
 app.post("/buscarBDentreFechas", async function (req, res) {
     try {
         let pack = []
-        //f1 = new Date(req.body.fech1)
-        //f2 = new Date(req.body.fech2)
-        //console.log(f1, f2)
         let data = await database.buscarBDentreFechas(req.body.fech1, req.body.fech2);
         for (var i = 0; i < data.length; i++) {
             let row = []
@@ -390,7 +393,7 @@ app.post("/buscarBDentreFechas", async function (req, res) {
             }
             pack.push(row);
         }
-        res.render("buscarBDentreFechas", { pack: pack });
+        res.render("buscarBD", { pack: pack });
     }
     catch (error) {
         console.log(error)
