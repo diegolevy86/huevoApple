@@ -12,10 +12,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.get("/", function (req, res) {
-    const fecha = functions.darFechaHoy();
-    //const weather = functions.obtenerTiempo();
-    res.render("home", {fecha: fecha});
+app.get("/", async function (req, res) {
+    let fecha = await functions.darFechaHoy();
+    functions.obtenerTiempo().then((result) => {
+        res.render("home", { fecha: fecha, tiempo: result[0], imagen: result[1] });
+    });
 });
 
 

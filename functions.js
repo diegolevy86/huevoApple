@@ -177,7 +177,7 @@ function numeroReventa(rv) {
     }
 }
 
-function darFechaHoy() {
+async function darFechaHoy() {
     const fecha = new Date();
     let dia = 7;
     switch (fecha.getDay()) {
@@ -198,21 +198,23 @@ function darFechaHoy() {
         default: dia = "que pasó???";
             break;
     }
+    console.log("Pasé por aca");
     return dia + ", " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
 }
 
-function obtenerTiempo() {
+async function obtenerTiempo() {
     const apiKey = "7a943b5b02d635529f838b01a6d841e5";
     const url = "https://api.openweathermap.org/data/2.5/weather?id=" + "3432043" + "&appid=" + apiKey + "&units=metric";
-    https.get(url, function (response) {
-        response.on("data", function (data) {
-            const weatherData = JSON.parse(data);
-            console.log(weatherData);
-            const icon = weatherData.weather[0].icon;
-            const iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-            return [weatherData.main.temp, iconURL];
-        });
-    });
+    console.log(url);
+    try {
+        const response = await fetch(url);
+        const weatherData = await response.json();
+        const icon = weatherData.weather[0].icon;
+        const iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+        return [weatherData.main.temp, iconURL];
+    } catch (error) {
+        console.error("Error al obtener datos del clima:", error);
+    }
 }
 
 module.exports = { validadorImei, numeroModeloColor, numeroReparacionTipo, numeroReventa, darFechaHoy, obtenerTiempo };
