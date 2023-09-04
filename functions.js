@@ -198,14 +198,12 @@ async function darFechaHoy() {
         default: dia = "que pasó???";
             break;
     }
-    console.log("Pasé por aca");
     return dia + ", " + fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
 }
 
 async function obtenerTiempo() {
     const apiKey = "7a943b5b02d635529f838b01a6d841e5";
     const url = "https://api.openweathermap.org/data/2.5/weather?id=" + "3432043" + "&appid=" + apiKey + "&units=metric";
-    console.log(url);
     try {
         const response = await fetch(url);
         const weatherData = await response.json();
