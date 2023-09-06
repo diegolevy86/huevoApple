@@ -452,7 +452,7 @@ async function buscarModeloColor(idMC) {
 async function cargarCliente(nomYap, e_mail, numTel) {
     const [cli, created] = await Cliente.findOrCreate({ where: { email: e_mail }, defaults: { nombreYapellido: nomYap, email: e_mail, numeroTelefono: numTel } });
     if (cli => cli instanceof Cliente) {
-        if (!created && (numTel != null && numTel != ""))
+        if (!created && numTel != null && numTel != "")
         {
             await Cliente.update({numeroTelefono: numTel}, { where: {email: e_mail}})
         }

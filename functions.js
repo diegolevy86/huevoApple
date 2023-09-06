@@ -1,5 +1,5 @@
 const https = require("https");
-const API = require(__dirname+"/.gitignore/apikeys.json")
+const API = require(__dirname+"/apikeys.json")
 
 let validadorImei = function (imei) {
     let num1 = Math.trunc(imei / 10000000000000);
