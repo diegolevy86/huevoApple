@@ -1,4 +1,5 @@
 const https = require("https");
+const API = require(__dirname+"/.gitignore/apikeys.json")
 
 let validadorImei = function (imei) {
     let num1 = Math.trunc(imei / 10000000000000);
@@ -202,7 +203,7 @@ async function darFechaHoy() {
 }
 
 async function obtenerTiempo() {
-    const apiKey = "7a943b5b02d635529f838b01a6d841e5";
+    const apiKey = API.WeatherAPI;
     const url = "https://api.openweathermap.org/data/2.5/weather?id=" + "3432043" + "&appid=" + apiKey + "&units=metric";
     try {
         const response = await fetch(url);

@@ -14,9 +14,13 @@ app.use(express.static("public"));
 
 app.get("/", async function (req, res) {
     let fecha = await functions.darFechaHoy();
+    let numRepas = await database.contarReparaciones();
+    let numClientes = await database.contarClientes();
+    let numTelefonos = await database.contarTelefonos();
     functions.obtenerTiempo().then((result) => {
-        res.render("home", { fecha: fecha, tiempo: result[0], imagen: result[1] });
+        res.render("home", { fecha: fecha, tiempo: result[0], imagen: result[1], numeroRepas: numRepas, numeroClientes: numClientes, numeroTelefonos: numTelefonos });
     });
+    
 });
 
 

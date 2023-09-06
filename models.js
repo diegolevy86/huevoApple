@@ -452,6 +452,10 @@ async function buscarModeloColor(idMC) {
 async function cargarCliente(nomYap, e_mail, numTel) {
     const [cli, created] = await Cliente.findOrCreate({ where: { email: e_mail }, defaults: { nombreYapellido: nomYap, email: e_mail, numeroTelefono: numTel } });
     if (cli => cli instanceof Cliente) {
+        if (!created && (numTel != null && numTel != ""))
+        {
+            await Cliente.update({numeroTelefono: numTel}, { where: {email: e_mail}})
+        }
         return [cli, created];
     }
 }
@@ -476,6 +480,24 @@ async function cargarReparacionSinCliente(idMC, im, idRT, idR, cod, gar, obs, fe
     return [rep, createdTel];
 }
 
+async function contarReparaciones()
+{
+    const { count, rows } = await Reparacion.findAndCountAll();
+    return count;
+}
+
+async function contarClientes()
+{
+    const { count, rows } = await Cliente.findAndCountAll();
+    return count;
+}
+
+async function contarTelefonos()
+{
+    const { count, rows } = await Telefono.findAndCountAll();
+    return count;
+}
+
 
 
 async function close() {
@@ -484,5 +506,5 @@ async function close() {
 
 module.exports = {
     authenticate, synchronize, buscarBDfecha, buscarModeloColor, buscarBDimei, buscarBDnombre, cargarCliente, cargarReparacion, cargarReparacionSinCliente,
-    buscarBDentreFechas, close
+    buscarBDentreFechas, contarReparaciones, contarClientes, contarTelefonos, close
 };
