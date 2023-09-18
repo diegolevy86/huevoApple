@@ -34,6 +34,10 @@
         </nav>
     </section>
 
+    <section class="container-fluid">
+        <div class="numResultados"><p><b><%= pack.length %></b> resultados</p></div>     
+    </section> 
+
     <table class="table">
         <thead>
             <tr>
@@ -58,7 +62,7 @@
                 <tr>
                     <% for(var j=0;j<pack[0].length;j++){ %>
                         <td>
-                            <%= pack[i][j]%>
+                            <%= pack[i][j] %>
                         </td>
                         <% } %>
                         <td>

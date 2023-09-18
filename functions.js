@@ -1,5 +1,5 @@
 const https = require("https");
-const API = require(__dirname+"/apikeys.json")
+const API = require(__dirname + "/apikeys.json")
 
 let validadorImei = function (imei) {
     let num1 = Math.trunc(imei / 10000000000000);
@@ -131,6 +131,16 @@ function numeroModeloColor(mc) {
         case "iPhone 13 PRO - Dorado": return 92;
         case "iPhone 14- Azul oscuro": return 93;
         case "iPhone 11 PRO- Verde oscuro": return 94;
+        case "iPhone 12 PRO- Verde oscuro": return 95;
+        case "iPhone 12 PRO- Dorado": return 96;
+        case "iPhone 13 PRO MAX Negro": return 97;
+        case "iPhone 12 PRO MAX Blanco": return 98;
+        case "iPhone 12 PRO MAX Azul": return 99;
+        case "iPhone SE3 Azul oscuro": return 100;
+        case "iPhone 12- Rojo": return 101;
+        case "iPhone 12- Azul": return 102;
+        case "iPhone 12 PRO- Blanco": return 103;
+        case "iPhone 13 PRO MAX Blanco": return 104;
         default: return -1;
     }
 }

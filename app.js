@@ -20,11 +20,11 @@ app.get("/", async function (req, res) {
     functions.obtenerTiempo().then((result) => {
         res.render("home", { fecha: fecha, tiempo: result[0], imagen: result[1], numeroRepas: numRepas, numeroClientes: numClientes, numeroTelefonos: numTelefonos });
     });
-    
+
 });
 
 
-app.get("/consultas", function(req, res){
+app.get("/consultas", function (req, res) {
     res.render("consultas");
 });
 
@@ -121,52 +121,57 @@ app.post("/buscarBDnombre", async function (req, res) {
 });
 
 app.post("/reparacionHoyCargada", async function (req, res) {
-    const fecha = new Date();
-    const fe = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
-    let im = Number(req.body.imei);
-    if (functions.validadorImei(im) != 0) {
-        res.render("error", { message: "IMEI incorrecto" });
-    }
-    else {
-        let cli = _.startCase(req.body.cli);
-        let gar = "";
-        let cc = "";
-        let ct = "";
-        let obs = "";
-        let nt = "";
-        let moc = functions.numeroModeloColor(req.body.mc);
-        let ret = functions.numeroReparacionTipo(req.body.rt);
-        let rev = functions.numeroReventa(req.body.rv);
-        if (req.body.gar == "1") {
-            gar = 1;
-        } else {
-            gar = 0;
-        }
-        if (req.body.obs == "") {
-            obs = null;
+    try {
+        const fecha = new Date();
+        const fe = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
+        let im = Number(req.body.imei);
+        if (functions.validadorImei(im) != 0) {
+            res.render("error", { message: "IMEI incorrecto" });
         }
         else {
-            obs = req.body.obs;
+            let cli = _.startCase(req.body.cli);
+            let gar = "";
+            let cc = "";
+            let ct = "";
+            let obs = "";
+            let nt = "";
+            let moc = functions.numeroModeloColor(req.body.mc);
+            let ret = functions.numeroReparacionTipo(req.body.rt);
+            let rev = functions.numeroReventa(req.body.rv);
+            if (req.body.gar == "1") {
+                gar = 1;
+            } else {
+                gar = 0;
+            }
+            if (req.body.obs == "") {
+                obs = null;
+            }
+            else {
+                obs = req.body.obs;
+            }
+            if (req.body.nt == "") {
+                nt = null;
+            } else {
+                nt = req.body.nt;
+            }
+            const [rep, createdCli, createdTel] = await database.cargarReparacion(cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, fe);
+            if (createdCli) {
+                cc = "El cliente se cargó correctamente."
+            } else {
+                cc = "El cliente ya existía."
+            }
+            if (createdTel) {
+                ct = "El equipo se cargó correctamente."
+            } else {
+                ct = "El equipo ya existía."
+            }
+            res.render("reparacionCargada", { imei6: (im % 1000000), messageCli: cc, messageTel: ct, message: "La reparación se cargó correctamente con ID: " + rep.idReparacion });
         }
-        if (req.body.nt == "") {
-            nt = null;
-        } else {
-            nt = req.body.nt;
-        }
-        const [rep, createdCli, createdTel] = await database.cargarReparacion(cli, req.body.em, nt, moc, im, ret, rev, req.body.cod, gar, obs, fe);
-        if (createdCli) {
-            cc = "El cliente se cargó correctamente."
-        } else {
-            cc = "El cliente ya existía."
-        }
-        if (createdTel) {
-            ct = "El equipo se cargó correctamente."
-        } else {
-            ct = "El equipo ya existía."
-        }
-        res.render("reparacionCargada", { imei6: (im % 1000000), messageCli: cc, messageTel: ct, message: "La reparación se cargó correctamente con ID: " + rep.idReparacion });
-    }
 
+    }
+    catch (error) {
+        res.render("error", { message: "Ocurrió un error. Consulte si se pudo cargar o vuelva a intentarlo." });
+    }
 });
 
 app.post("/reparacionHoySinClienteCargada", async function (req, res) {

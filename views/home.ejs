@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gloria+Hallelujah&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <title>Huevo Apple</title>
 </head>
@@ -29,8 +30,8 @@
                 <div class="menu collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <form class="nav-link" aria-current="page" action="/consultas" method="get"><button type="submit"
-                                class="btn btn-primary">Consultas</button></form>
+                            <form class="nav-link" aria-current="page" action="/consultas" method="get"><button
+                                    type="submit" class="btn btn-primary">Consultas</button></form>
                     </ul>
                 </div>
             </div>
@@ -39,9 +40,25 @@
 
     <section class="container-fluid">
         <div class="container-fluid row banner">
-            <div class="col-md-4"><span class="temp"><img src="<%= imagen %>" width="100px"><%= tiempo %> ºC</span></div>
-            <div class="col-md-4"><h1><%= fecha %></h1></div>
-            <div class="col-md-4 infor1"><p><b><%= numeroRepas %></b> reparaciones</p><p><b><%= numeroClientes %></b> clientes</p><p><b><%= numeroTelefonos %></b> teléfonos</p></div>
+            <div class="col-md-4"><span class="temp"><img src="<%= imagen %>" width="100px">
+                    <%= tiempo %> ºC
+                </span></div>
+            <div class="col-md-4">
+                <h1>
+                    <%= fecha %>
+                </h1>
+            </div>
+            <div class="col-md-4 infor1">
+                <p><b>
+                        <%= numeroRepas %>
+                    </b> reparaciones</p>
+                <p><b>
+                        <%= numeroClientes %>
+                    </b> clientes</p>
+                <p><b>
+                        <%= numeroTelefonos %>
+                    </b> teléfonos</p>
+            </div>
         </div>
     </section>
 
@@ -66,10 +83,10 @@
             </div>
             <div class="busq col-md-4">
                 <form class="input-group mb-3" action="/buscarBDnombre" method="post">
-                <span class="input-group-text" id="inputGroup-sizing-default">Buscar por cliente</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" name="nYa"
-                    aria-describedby="inputGroup-sizing-default" placeholder="Juan Lopez">
-                <button type="submit" class="btn btn-primary">→</button>
+                    <span class="input-group-text" id="inputGroup-sizing-default">Buscar por cliente</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="nYa"
+                        aria-describedby="inputGroup-sizing-default" placeholder="Juan Lopez">
+                    <button type="submit" class="btn btn-primary">→</button>
                 </form>
             </div>
         </div>
@@ -93,7 +110,7 @@
 
                     <div class="formItem input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Modelo y color</span>
-                        <input class="form-control modcol" aria-label="Sizing example input" name ="mc"
+                        <input class="form-control modcol" aria-label="Sizing example input" name="mc"
                             aria-describedby="inputGroup-sizing-default" list="datalistOptions" id="modcol1"
                             placeholder="6S negro">
                     </div>
@@ -142,7 +159,7 @@
                     </div>
 
                     <div class="formItem form-check">
-                        <input class="form-check-input" type="checkbox" value="1" name="gar" id="flexCheckDefault"> 
+                        <input class="form-check-input" type="checkbox" value="1" name="gar" id="flexCheckDefault">
                         <label class="garantia form-check-label" for="flexCheckDefault">Garantía</label>
                     </div>
 
@@ -319,6 +336,16 @@
                             <option value="iPhone 13 PRO- Dorado">
                             <option value="iPhone 14- Azul oscuro">
                             <option value="iPhone 11 PRO- Verde oscuro">
+                            <option value="iPhone 12 PRO- Verde oscuro">
+                            <option value="iPhone 12 PRO- Dorado">
+                            <option value="iPhone 13 PRO MAX Negro">
+                            <option value="iPhone 12 PRO MAX Blanco">
+                            <option value="iPhone 12 PRO MAX Azul">
+                            <option value="iPhone SE3 Azul oscuro">
+                            <option value="iPhone 12- Rojo">
+                            <option value="iPhone 12- Azul">
+                            <option value="iPhone 12 PRO- Blanco">
+                            <option value="iPhone 13 PRO MAX Blanco">
                         </datalist>
                     </div>
 
