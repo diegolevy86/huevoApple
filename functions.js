@@ -127,8 +127,8 @@ function numeroModeloColor(mc) {
         case "iPhone 7- Rojo": return 88;
         case "iPhone 5- Negro": return 89;
         case "iPhone 5- Gris": return 90;
-        case "iPhone 11 PRO - Dorado": return 91;
-        case "iPhone 13 PRO - Dorado": return 92;
+        case "iPhone 11 PRO- Dorado": return 91;
+        case "iPhone 13 PRO- Dorado": return 92;
         case "iPhone 14- Azul oscuro": return 93;
         case "iPhone 11 PRO- Verde oscuro": return 94;
         case "iPhone 12 PRO- Verde oscuro": return 95;
@@ -141,7 +141,8 @@ function numeroModeloColor(mc) {
         case "iPhone 12- Azul": return 102;
         case "iPhone 12 PRO- Blanco": return 103;
         case "iPhone 13 PRO MAX Blanco": return 104;
-        default: return -1;
+        case "iPhone 14 PRO Negro": return 105;
+        case "iPhone 13 PRO MAX Azul": return 106;
     }
 }
 
@@ -183,6 +184,7 @@ function numeroReventa(rv) {
         case "Jona": return 10;
         case "Varios": return 11;
         case "Manu Lokura": return 12;
+        case "Martina": return 13; 
         case "": return null;
         default: return -1;
     }
