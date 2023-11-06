@@ -99,11 +99,11 @@ function numeroModeloColor(mc) {
         case "iPhone 13- Azul": return 59;
         case "iPhone 7 PLUS Rojo": return 60;
         case "iPhone 11 PRO MAX Verde oscuro": return 61;
-        case "iPhone 13 PRO - Gris": return 62;
-        case "iPhone SE1 Negro": return 63;
+        case "iPhone SE1 Negro": return 62;
+        case "iPhone 13 PRO- Gris": return 63;
         case "iPhone SE1 Gris": return 64;
         case "iPhone SE1 Dorado": return 65;
-        case "iPhone 13 PRO - Blanco": return 66;
+        case "iPhone 13 PRO- Blanco": return 66;
         case "iPhone 8- Rojo": return 67;
         case "iPhone SE2 Rojo": return 68;
         case "iPhone 11 PRO MAX Negro": return 69;
