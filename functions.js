@@ -95,8 +95,8 @@ function numeroModeloColor(mc) {
         case "iPhone 11- Verde claro": return 55;
         case "iPhone 11- Violeta": return 56;
         case "iPhone SE2 Negro": return 57;
-        case "iPhone 13 PRO - Azul": return 58;
-        case "iPhone 13- Azul": return 59;
+        case "iPhone 13- Azul": return 58;
+        case "iPhone 13 PRO- Azul": return 59;
         case "iPhone 7 PLUS Rojo": return 60;
         case "iPhone 11 PRO MAX Verde oscuro": return 61;
         case "iPhone SE1 Negro": return 62;
@@ -143,6 +143,9 @@ function numeroModeloColor(mc) {
         case "iPhone 13 PRO MAX Blanco": return 104;
         case "iPhone 14 PRO Negro": return 105;
         case "iPhone 13 PRO MAX Azul": return 106;
+        case "iPhone 12 MINI Verde claro": return 107;
+        case "iPhone 14 Celeste": return 108;
+        case "iPhone 12 MINI Blanco": return 109;
     }
 }
 
@@ -224,7 +227,8 @@ async function obtenerTiempo() {
         const iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
         return [weatherData.main.temp, iconURL];
     } catch (error) {
-        console.error("Error al obtener datos del clima:", error);
+        console.error("Error al obtener datos del clima:", error)
+        return ["No disponible", "No disponible"];
     }
 }
 
