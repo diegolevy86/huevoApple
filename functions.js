@@ -187,7 +187,8 @@ function numeroReventa(rv) {
         case "Jona": return 10;
         case "Varios": return 11;
         case "Manu Lokura": return 12;
-        case "Martina": return 13; 
+        case "Martina": return 13;
+        case "Diego": return 14;
         case "": return null;
         default: return -1;
     }
