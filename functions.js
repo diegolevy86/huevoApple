@@ -149,6 +149,8 @@ function numeroModeloColor(mc) {
         case "iPhone 14 PLUS Celeste": return 110;
         case "iPhone 12 Verde claro": return 111;
         case "iPhone 12 MINI Violeta": return 112;
+        case "iPhone 14 PRO MAX Violeta": return 114;
+        case "iPhone 14 PRO Violeta": return 115;
         default: return -1;
     }
 }
