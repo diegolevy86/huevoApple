@@ -151,6 +151,7 @@ function numeroModeloColor(mc) {
         case "iPhone 12 MINI Violeta": return 112;
         case "iPhone 14 PRO MAX Violeta": return 114;
         case "iPhone 14 PRO Violeta": return 115;
+        case "iPhone 15 PRO Black Titanium": return 117;
         default: return -1;
     }
 }
